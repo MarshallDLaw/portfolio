@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Amrit Portfolio</title>
+    <link href="https://fonts.googleapis.com/css?family=Alatsi|Anton|Lobster|Noto+Sans+JP&display=swap"
+        rel="stylesheet">
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #000;
+        }
+
+        .fly-in-text {
+            list-style: none;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translateX(-50%) translateY(-50%);
+        }
+
+        .fly-in-text li {
+            display: inline-block;
+            margin-right: 50px;
+            font-family: Open Sans, Arial;
+            font-weight: bold;
+            font-size: 54px;
+            color: white;
+            opacity: 1;
+            transition: all 2.5s ease;
+            color: black;
+            -webkit-text-fill-color: white;
+            -webkit-text-stroke-width: 2px;
+            -webkit-text-stroke-color: black;
+        }
+
+        .fly-in-text li:last-child {
+            margin-right: 0;
+        }
+
+        .fly-in-text.hidden2 li {
+            opacity: 0;
+        }
+
+        .fly-in-text.hidden2 li:nth-child(1) {
+            transform: translateX(-200px) translateY(-200px);
+        }
+
+        .fly-in-text.hidden2 li:nth-child(2) {
+            transform: translateX(20px) translateY(100px);
+        }
+
+        .fly-in-text.hidden2 li:nth-child(3) {
+            transform: translateX(-150px) translateY(-80px);
+        }
+
+        .fly-in-text.hidden2 li:nth-child(4) {
+            transform: translateX(10px) translateY(-200px);
+        }
+
+        .fly-in-text.hidden2 li:nth-child(5) {
+            transform: translateX(-300px) translateY(200px);
+        }
+
+        .fly-in-text.hidden2 li:nth-child(6) {
+            transform: translateX(20px) translateY(-20px);
+        }
+
+        .fly-in-text.hidden2 li:nth-child(7) {
+            transform: translateX(30px) translateY(200px);
+        }
+
+        .background-wrap {
+            position: fixed;
+            z-index: -1000;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            top: 0;
+            left: 0;
+        }
+
+        #video-bg-elem {
+            position: absolute;
+            top: 0;
+            left: 0;
+            min-height: 100%;
+            min-width: 100%;
+        }
+
+        .empty1 {
+            height: 600px;
+        }
+
+        .header {
+            display: flex;
+            background-color: #f1f1f1;
+            font-family: 'Alatsi', sans-serif;
+            width: 100%;
+            height: 800px;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background: transparent;
+            color: white;
+            text-shadow: black;
+            font-size: 20px;
+        }
+
+        .hr1 {
+            border: white solid 2px;
+            width: 200px;
+            border-radius: 5px;
+        }
+
+        #navbar {
+            overflow: hidden;
+            background-color: rgb(0, 0, 0);
+            opacity: 1;
+            text-align: center;
+            font-family: 'Lobster', cursive;
+            z-index: 9999;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        #navbar a {
+            display: inline;
+            color: white;
+            text-align: center;
+            padding: 10px 10px;
+            text-decoration: none;
+            font-size: 20px;
+
+        }
+
+        #navbar a:hover {
+            background-color: white;
+            border-radius: 10px;
+            color: black;
+            text-decoration: underline white;
+            transition-duration: 1s;
+
+        }
+
+        .sticky {
+            position: fixed;
+            top: 0;
+            width: 100%;
+
+        }
+
+        .sticky+ {
+            padding-top: 30px;
+        }
+
+        .aboutme {
+            width: 700px;
+            margin: 0 auto;
+            padding: 100px 200px 100px 200px;
+            transform-style: preserve-3d;
+            transform: perspective(800px);
+            background-color: rgb(34, 34, 34);
+            color: white;
+            text-align: center;
+            height: 300px;
+            border-radius: 0 0 5% 5%;
+        }
+
+        .aboutme h2 {
+            text-transform: uppercase;
+            font-size: 60px;
+            font-weight: 400;
+            font-family: 'Lobster', cursive;
+        }
+
+        .aboutme p {
+            font-size: 20px;
+        }
+
+        .aboutme h2,
+        .aboutme p {
+            transition: all 0.8s ease;
+        }
+
+        .aboutme.hidden h2 {
+            opacity: 0;
+            transform: translate3d(0, 0, 400px) rotateY(-15deg);
+        }
+
+        .aboutme.hidden p {
+            opacity: 0;
+            transform: translate3d(0, 0, 400px) rotateY(15deg);
+        }
+
+        .contactmeheader {
+            display: flex;
+            width: 300px;
+            height: 45px;
+            border: white 2px solid;
+            margin-top: 25px;
+            border-radius: 10px;
+            text-align: center;
+            justify-content: center;
+            align-content: center;
+        }
+
+        .contactmeheader:hover {
+            cursor: pointer;
+            background-color: white;
+            color: black;
+            transition-duration: 1s;
+        }
+
+        .contactmeheadericon {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            margin: 5px 5px 5px 0px;
+            display: inline-block;
+        }
+
+        .contactmeheadericons {
+            display: flex;
+            flex-direction: row;
+            padding: 10px;
+        }
+
+        .portfolio {
+            width: 700px;
+            margin: 0 auto;
+            padding: 100px 200px 100px 200px;
+            transform-style: preserve-3d;
+            transform: perspective(800px);
+            background-color: rgb(34, 34, 34);
+            color: white;
+            text-align: center;
+            height: 800px;
+            margin-top: 50px;
+            border-radius: 5%;
+        }
+
+        .portfolio h2 {
+            text-transform: uppercase;
+            font-size: 60px;
+            font-weight: 400;
+            font-family: 'Lobster', cursive;
+        }
+
+        .portfolio p {
+            font-size: 20px;
+        }
+
+        .portfolio h2,
+        .portfolio p,
+        .portfolio img {
+            transition: all 0.8s ease;
+        }
+
+
+        .portfolio.hidden3 h2 {
+            opacity: 0;
+            transform: translate3d(0, 0, 400px) rotateY(-25deg);
+        }
+
+        .portfolio.hidden3 p {
+            opacity: 0;
+            transform: translate3d(0, 0, 400px) rotateY(25deg);
+        }
+
+        .portfolio.hidden3 img {
+            opacity: 0;
+            transform: translate3d(0, 0, 400px) rotateY(-25deg);
+        }
+
+        .skill {
+            width: 700px;
+            margin: 0 auto;
+            padding: 100px 200px 100px 200px;
+            transform-style: preserve-3d;
+            transform: perspective(800px);
+            background-color: rgb(34, 34, 34);
+            color: white;
+            text-align: center;
+            height: 700px;
+            margin-top: 50px;
+            border-radius: 5%;
+        }
+
+        .skill h2 {
+            text-transform: uppercase;
+            font-size: 60px;
+            font-weight: 400;
+            font-family: 'Lobster', cursive;
+        }
+
+        .skill p {
+            font-size: 20px;
+        }
+
+        .skill h2,
+        .skill p {
+            transition: all 0.8s ease;
+        }
+
+        .skill.hidden4 h2 {
+            opacity: 0;
+            transform: translate3d(0, 0, 400px) rotateY(-25deg);
+        }
+
+        .skill.hidden4 p {
+            opacity: 0;
+            transform: translate3d(0, 0, 400px) rotateY(25deg);
+        }
+
+        .slideshow-container {
+            max-width: 1000px;
+            position: relative;
+            margin: auto;
+        }
+
+
+        .prev {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+        }
+
+        .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+        }
+
+        .next {
+            right: -200px;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev {
+            right: 860px;
+            border-radius: 3px 0 0 3px;
+            z-index: 9999;
+        }
+
+        .prev:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .text {
+            color: #f2f2f2;
+            font-size: 15px;
+            padding: 8px 12px;
+            position: absolute;
+            bottom: 8px;
+            width: 100%;
+            text-align: center;
+        }
+
+
+        .numbertext {
+            color: #f2f2f2;
+            font-size: 12px;
+            padding: 8px 12px;
+            position: absolute;
+            top: 0;
+        }
+
+        .dot {
+            cursor: pointer;
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+
+        .active,
+        .dot:hover {
+            background-color: #717171;
+        }
+
+        .fade {
+            -webkit-animation-name: fade;
+            -webkit-animation-duration: 1.5s;
+            animation-name: fade;
+            animation-duration: 1.5s;
+        }
+
+        @-webkit-keyframes fade {
+            from {
+                opacity: .4
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes fade {
+            from {
+                opacity: .4
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+
+        @media only screen and (max-width: 300px) {
+
+            .prev,
+            .next,
+            .text {
+                font-size: 11px
+            }
+        }
+
+        .highcharts-background {
+            fill: rgb(34, 34, 34);
+        }
+
+        .highcharts-text-outline {
+            stroke: white;
+            fill: none !important;
+            color: none;
+        }
+
+        .contactmefooter {
+            display: flex;
+            background-color: rgba(0, 0, 0, 0.452);
+            width: 100%;
+            height: 300px;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background: transparent;
+            color: white;
+            text-shadow: black;
+            font-size: 20px;
+            font-family: 'Lobster', cursive;
+        }
+
+        .contactmediv {
+            display: flex;
+            width: 200px;
+            height: 45px;
+            border: white 2px solid;
+            margin-top: 25px;
+            border-radius: 10px;
+            text-align: center;
+            justify-content: center;
+            align-content: center;
+        }
+
+        .sidenav {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            text-align: center;
+            color: white;
+            z-index: 99999;
+        }
+
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .sidenav a:hover {
+            color: #f1f1f1;
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        @media screen and (max-height: 450px) {
+            .sidenav {
+                padding-top: 15px;
+            }
+
+            .sidenav a {
+                font-size: 18px;
+            }
+        }
+
+        .contactmeheader :hover {
+            cursor: pointer;
+        }
+
+        .submit {
+            background-color: rgb(34, 33, 36);
+            border: none;
+            color: white;
+            padding: 15px 24px;
+            text-align: center;
+            font-size: 12px;
+            margin: 4px 2px;
+            cursor: pointer;
+            transition-duration: 0.4s;
+            border-radius: 5px;
+        }
+
+        .b {
+            border-radius: 5px;
+            border: 2px solid rgb(255, 255, 255);
+            padding: 20px;
+            width: 400px;
+            height: 10px;
+        }
+
+        .m {
+            border-radius: 5px;
+            border: 2px solid rgb(255, 255, 255);
+            padding: 20px;
+            width: 400px;
+            height: 100px;
+        }
+
+        @media screen and (max-width: 480px) {
+            .fly-in-text.hidden2 {
+                width: 200px;
+                float: left;
+                font-size: 20px;
+            }
+        }
+
+        .contactmediv:hover {
+            cursor: pointer;
+            background-color: white;
+            color: black;
+            transition-duration: 1s;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="background-wrap">
+        <video id="video-bg-elem" preload="auto" autoplay="true" loop="loop" muted="muted">
+            <source src="Binary_numbers_alpha_overlay_03_Videvo.gif" type="video/mp4">
+            Video not supported
+        </video>
+    </div>
+
+    <ul class="fly-in-text hidden2">
+        <li>W</li>
+        <li>E</li>
+        <li>L</li>
+        <li>C</li>
+        <li>O</li>
+        <li>M</li>
+        <li>E</li>
+    </ul>
+    <div class="intro">
+
+
+    </div>
+    <div id="mySidenav" class="sidenav">
+        <h2> Contact Me</h2> <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <label for="name"><b>Name</b></label><br>
+        <input type="text" name="name" placeholder="Enter Your Name." class="b"><br><br>
+        <label for="email"><b>Email</b></label><br>
+        <input type="email" name="email" placeholder="Enter Your Email." class="b"><br><br>
+        <label for="email"><b>Phone Number</b></label><br>
+        <input type="number" name="phone" placeholder="Enter your number" class="b"><br><br>
+        <label for="message"><b>Whats on your mind?</b></label><br>
+        <textarea class="m" rows="2" cols="50" name="comment" form="usrform"
+            placeholder="Enter the message....."></textarea><br><br>
+        <input type="submit" value="Submit" class="submit">
+    </div>
+
+    <div class="empty1"></div>S
+    <div class="header" id="header">
+        <h1>AMRITPAL SINGH MATHARU</h1>
+        <h2>PROGRAMMER</h2>
+        <hr class="hr1">
+        <div class="contactmeheader" onclick="openNav()">
+            <img class="contactmeheadericon" src="emailicon.png" alt="Contact">
+            <p style="padding-top: 12px;">Contact Me</p>
+        </div>
+        <div class="contactmeheadericons">
+            <div><a href="mailto:agmatharu@gmail.com?Subject=Hello" target="_top"><img
+                        src="emailicon.png" alt="email" title="Email" width="35px" height="35px"
+                        style="padding: 10px;border-radius: 50%;"></div></a>
+            <div><a href="https://www.linkedin.com/in/amritpal-singh-matharu-7732b9198/" target="blank"><img
+                        src="linkedinicon.png" alt="linkedin" title="Linkedin" width="35px"
+                        height="35px" style="padding: 10px;border-radius: 50%;"></div></a>
+            <div><a href="https://twitter.com/Amritpa41390903" target="blank"><img
+                        src="twittericon.png" alt="twitter" title="Twitter" width="35px"
+                        height="35px" style="padding: 10px;border-radius: 50%;"></div></a>
+            <div><a href="https://www.instagram.com/the_muscledom/" target="blank"><img
+                        src="instaicon.png" alt="insta" title="Instagram" width="35px" height="35px"
+                        style="padding: 10px;border-radius: 50%;"></div></a>
+
+        </div>
+    </div>
+    <div id="navbar">
+        <a href="#aboutme" style="padding: 5px;">About Me</a>
+        <a href="#portfolio" style="padding: 5px;">Portfolio</a>
+        <a href="#header"><img src="109334_5764696_1075322_image.png" alt="logo"
+                style="height: 35px; width: 35px; border-radius: 50%;"></a>
+        <a href="#skill">Skills</a>
+        <a href="#contactmefooter">Contact</a>
+
+    </div>
+    <div class="aboutme hidden" id="aboutme">
+        <h2>About Me</h2>
+        <p>I am a 21-year old gaming enthusiast, who also enjoys coding during free time. Sketching and working out are
+            my past-time Hobbies.</p>
+    </div>
+    <div class="portfolio hidden3" id="portfolio">
+        <h2>Portfolio</h2>
+        <p>This is my first Assignment which I made using HTML & CSS and so few drawing which i made and I there will be
+            more....</p>
+        <br>
+        <div class="slideshow-container">
+
+            <div class="mySlides fade">
+                <img style="width: 400px; height: 600px;" src="Resume.jpg" style="width:100%">
+            </div>
+
+            <div class="mySlides fade">
+                <img style="width: 450px; height: 600px;" src="IMG_20190413_013410.jpg"
+                    style="width:100%">
+            </div>
+
+            <div class="mySlides fade">
+                <img style="width: 500px; height: 600px;" src="IMG_20190413_013420.jpg"
+                    style="width:100%">
+            </div>
+
+            <div class="mySlides fade">
+                <img style="width: 750px; height: 600px;" src="IMG_20190413_013429.jpg"
+                    style="width:100%">
+            </div>
+
+            <div class="mySlides fade">
+                <img style="width: 750px; height: 600px;" src="IMG_20190413_013442.jpg"
+                    style="width:100%">
+            </div>
+
+            <div class="mySlides fade">
+                <img style="width: 750px; height: 600px;" src="IMG_20190413_013548.jpg"
+                    style="width:100%">
+            </div>
+
+            <div class="mySlides fade">
+                <img style="width: 450px; height: 600px;" src="IMG_20190605_152752.jpg"
+                    style="width:100%">
+            </div>
+
+
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+        </div>
+        <br>
+
+        <div style="text-align:center">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+            <span class="dot" onclick="currentSlide(4)"></span>
+            <span class="dot" onclick="currentSlide(5)"></span>
+            <span class="dot" onclick="currentSlide(6)"></span>
+            <span class="dot" onclick="currentSlide(7)"></span>
+        </div>
+
+    </div>
+    <div class="skill hidden4" id="skill">
+        <h2>Skills</h2>
+        <p>This is my first Assignment which I made using HTML & CSS & Javascript and I there will me more soon....</p>
+        <div id="ring" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+
+    </div>
+    <footer class="contactmefooter" id="contactmefooter">
+        <h2>THANK YOU!</h2>
+        <P>Want to chat about something?</P>
+        <div class="contactmediv" onclick="openNav()">
+            <img class="contactmeheadericon" src="emailicon.png" alt="Contact">
+            <p style="padding-top: 12px;">Contact Me</p>
+        </div>
+        <div class="contactmeheadericons">
+            <div><a href="mailto:agmatharu@gmail.com?Subject=Hello" target="_top"><img
+                        src="emailicon.png" alt="email" title="Email" width="35px" height="35px"
+                        style="padding: 10px;border-radius: 50%;"></div></a>
+            <div><a href="https://www.linkedin.com/in/amritpal-singh-matharu-7732b9198/" target="blank"><img
+                        src="linkedinicon.png" alt="linkedin" title="Linkedin" width="35px"
+                        height="35px" style="padding: 10px;border-radius: 50%;"></div></a>
+            <div><a href="https://twitter.com/Amritpa41390903" target="blank"></a><img
+                    src="twittericon.png" alt="twitter" title="Twitter" width="35px" height="35px"
+                    style="padding: 10px;border-radius: 50%;"></div></a>
+            <div><a href="https://www.instagram.com/the_muscledom/" target="blank"><img
+                        src="instaicon.png" alt="insta" title="Instagram" width="35px" height="35px"
+                        style="padding: 10px;border-radius: 50%;"></div></a>
+        </div>
+    </footer>
+
+
+    <!-- <script src="jquery-3.4.1.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            
+            setTimeout(function () {
+                $('.fly-in-text').removeClass('hidden2');
+            }, 500);
+
+
+
+            var aboutmeEl = $('div.aboutme'),
+                aboutmeElOffset = 1000,
+                documentEl = $(document);
+
+            documentEl.on('scroll', function () {
+                if (documentEl.scrollTop() > aboutmeElOffset && aboutmeEl.hasClass('hidden')) aboutmeEl
+                    .removeClass('hidden');
+            });
+
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "50%";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+  
+        window.onscroll = function () {
+            myFunction()
+        };
+
+        var navbar = document.getElementById("navbar");
+        var sticky = navbar.offsetTop;
+
+        function myFunction() {
+            if (window.pageYOffset >= sticky) {
+                navbar.classList.add("sticky")
+            } else {
+                navbar.classList.remove("sticky");
+            }
+        }
+
+            var documentEl = $(document),
+                fadeElem = $('.header');
+
+
+            documentEl.on('scroll', function () {
+                var currScrollPos = documentEl.scrollTop();
+
+                fadeElem.each(function () {
+                    var $this = $(this),
+                        elemOffsetTop = $this.offset().top;
+                    if (currScrollPos > elemOffsetTop) $this.css('opacity', 1 - (currScrollPos -
+                        elemOffsetTop) / 400);
+                });
+            });
+
+    
+
+
+            var portfolioEl = $('div.portfolio'),
+                portfolioElOffset = 1500,
+                documentEl = $(document);
+
+            documentEl.on('scroll', function () {
+                if (documentEl.scrollTop() > portfolioElOffset && portfolioEl.hasClass('hidden3'))
+                    portfolioEl
+                    .removeClass('hidden3');
+            });
+
+            var skillEl = $('div.skill'),
+                skillElOffset = 2400,
+                documentEl = $(document);
+
+            documentEl.on('scroll', function () {
+                if (documentEl.scrollTop() > skillElOffset && skillEl.hasClass('hidden4')) skillEl
+                    .removeClass('hidden4');
+            });
+    
+        var slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("dot");
+            if (n > slides.length) {
+                slideIndex = 1
+            }
+            if (n < 1) {
+                slideIndex = slides.length
+            }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " active";
+        }
+        });
+    </script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script>
+        Highcharts.setOptions({
+            colors: Highcharts.map(Highcharts.getOptions().colors, function (color) {
+                return {
+                    radialGradient: {
+                        cx: 0.5,
+                        cy: 0.3,
+                        r: 0.7
+                    },
+                    stops: [
+                        [0, color],
+                        [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+                    ]
+                };
+            })
+        });
+
+        Highcharts.chart('ring', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: ''
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                        connectorColor: 'silver'
+                    }
+                }
+            },
+            series: [{
+                name: 'Share',
+                data: [{
+                        name: 'HTML',
+                        y: 40
+                    },
+                    {
+                        name: 'Javascript',
+                        y: 10
+                    },
+                    {
+                        name: 'Designing',
+                        y: 20
+                    },
+                    {
+                        name: 'CSS',
+                        y: 20
+                    },
+                    {
+                        name: 'Photoshop',
+                        y: 10
+                    },
+
+                ]
+            }]
+        });
+    </script>
+
+</body>
+
+</html>
+
+</body>
+
+</html>

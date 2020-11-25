@@ -1,0 +1,81 @@
+<style type='text/css'>
+    .fly-in-text {
+             list-style: none;
+             position: absolute;
+             left: 50%;
+             top: 50%;
+             transform: translateX(-50%) translateY(-50%);
+         }
+ 
+         .fly-in-text li {
+             display: inline-block;
+             margin-right: 50px;
+             font-family: Open Sans, Arial;
+             font-weight: bold;
+             font-size: 54px;
+             color: white;
+             opacity: 1;
+             transition: all 2.5s ease;
+             color: black;
+             -webkit-text-fill-color: white;
+             -webkit-text-stroke-width: 2px;
+             -webkit-text-stroke-color: black;
+         }
+ 
+         .fly-in-text li:last-child {
+             margin-right: 0;
+         }
+ 
+         .fly-in-text.hidden2 li {
+             opacity: 0;
+         }
+ 
+         .fly-in-text.hidden2 li:nth-child(1) {
+             transform: translateX(-200px) translateY(-200px);
+         }
+ 
+         .fly-in-text.hidden2 li:nth-child(2) {
+             transform: translateX(20px) translateY(100px);
+         }
+ 
+         .fly-in-text.hidden2 li:nth-child(3) {
+             transform: translateX(-150px) translateY(-80px);
+         }
+ 
+         .fly-in-text.hidden2 li:nth-child(4) {
+             transform: translateX(10px) translateY(-200px);
+         }
+ 
+         .fly-in-text.hidden2 li:nth-child(5) {
+             transform: translateX(-300px) translateY(200px);
+         }
+ 
+         .fly-in-text.hidden2 li:nth-child(6) {
+             transform: translateX(20px) translateY(-20px);
+         }
+ 
+         .fly-in-text.hidden2 li:nth-child(7) {
+             transform: translateX(30px) translateY(200px);
+         }
+ </style>
+ <body>
+    <ul class="fly-in-text hidden2">
+         <li>W</li>
+         <li>E</li>
+         <li>L</li>
+         <li>C</li>
+         <li>O</li>
+         <li>M</li>
+         <li>E</li>
+     </ul>
+     <div class="intro">
+          <script type="text/javascript">
+         $(function () {
+ 
+             setTimeout(function () {
+                 $('.fly-in-text').removeClass('hidden2');
+             }, 500);
+ 
+         })();
+     </script>
+ </body>
